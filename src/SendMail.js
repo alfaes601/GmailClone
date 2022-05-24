@@ -3,28 +3,48 @@ import { Close } from "@material-ui/icons";
 import React from "react";
 import "./SendMail.css";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { closeSendMessage } from "./features/mailSlice";
+import { db } from "./firebase";
+import { serverTimestamp, collection, addDoc } from "firebase/firestore";
 
 function SendMail() {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (formData) => {
+    console.log(formData);
+    let collRef = await collection(db, "emails"); // returns a collection ref. ie. creates one if one does not exist.
+    await addDoc(
+      collRef,
+      {
+        to: formData.to,
+        subject: formData.subject,
+        message: formData.message,
+        timestamp: serverTimestamp(),
+      },
+      { merge: true }
+    );
+    dispatch(closeSendMessage());
   };
   return (
     <div className="sendMail">
       <div className="sendMail__header">
         <h1>New Message</h1>
-        <Close className="sendMail__close" />
+        <Close
+          onClick={() => dispatch(closeSendMessage())}
+          className="sendMail__close"
+        />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           {...register("to", { required: true })}
           placeholder="To"
-          type="text"
+          type="email"
         />
         {errors.to && <p className="sendMail__error">To is required</p>}
         <input
