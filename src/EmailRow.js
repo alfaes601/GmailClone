@@ -6,7 +6,7 @@ import "./EmailRow.css";
 import { useDispatch } from "react-redux";
 import { selectMail } from "./features/mailSlice";
 
-function EmailRow({ id, subject, message, time }) {
+function EmailRow({ id, title, subject, message, time }) {
   const history = useNavigate();
   const dispatch = useDispatch();
   const openEmail = () => {
@@ -14,6 +14,7 @@ function EmailRow({ id, subject, message, time }) {
     dispatch(
       selectMail({
         id,
+        title,
         subject,
         message,
         time,
@@ -34,7 +35,7 @@ function EmailRow({ id, subject, message, time }) {
       <h3 className="emailRow__title">{subject}</h3>
       <div className="emailRow__message">
         <h4>
-          {subject}
+          {title}
           <span className="emailRow__description">
             {" - "}
             {message}

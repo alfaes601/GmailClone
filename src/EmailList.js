@@ -75,6 +75,7 @@ function EmailList() {
           <EmailRow
             key={id}
             name={id}
+            title={to}
             subject={subject}
             message={message}
             time={new Date(timestamp?.seconds * 1000).toUTCString()}

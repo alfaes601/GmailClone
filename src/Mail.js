@@ -22,7 +22,6 @@ import "./Mail.css";
 function Mail() {
   const history = useNavigate();
   const selectedMail = useSelector(selectOpenEmail);
-  console.log(selectedMail);
   return (
     <div className="mail">
       <div className="mail__tools">
@@ -71,7 +70,7 @@ function Mail() {
         <div className="mail__bodyHeader">
           <h2>{selectedMail?.subject}</h2>
           <LabelImportant className="mail__important" />
-          <p>{selectedMail?.subject}</p>
+          <p>{selectedMail?.title}</p>
           <p className="mail__time">{selectedMail?.time}</p>
         </div>
         <div className="mail__message">
