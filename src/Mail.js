@@ -13,15 +13,23 @@ import {
   UnfoldMore,
   WatchLater,
 } from "@material-ui/icons";
+import { deleteDoc, doc } from "firebase/firestore";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectOpenEmail } from "./features/mailSlice";
+import { db } from "./firebase";
 import "./Mail.css";
 
 function Mail() {
   const history = useNavigate();
   const selectedMail = useSelector(selectOpenEmail);
+  console.log(selectedMail);
+  const eliminarMail = async () => {
+    await deleteDoc(doc(db, "emails", selectedMail.id)).then(() => {
+      history("/");
+    });
+  };
   return (
     <div className="mail">
       <div className="mail__tools">
@@ -35,7 +43,7 @@ function Mail() {
           <IconButton>
             <Error />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={eliminarMail}>
             <Delete />
           </IconButton>
           <IconButton>

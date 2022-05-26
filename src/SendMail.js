@@ -17,7 +17,6 @@ function SendMail() {
   } = useForm();
 
   const onSubmit = async (formData) => {
-    console.log(formData);
     let collRef = await collection(db, "emails"); // returns a collection ref. ie. creates one if one does not exist.
     await addDoc(
       collRef,

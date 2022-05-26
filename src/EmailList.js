@@ -13,7 +13,7 @@ import {
 } from "@material-ui/icons";
 import { db } from "./firebase";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./EmailList.css";
 import EmailRow from "./EmailRow";
 import Section from "./Section";
@@ -74,7 +74,7 @@ function EmailList() {
         {emails?.map(({ id, data: { to, subject, message, timestamp } }) => (
           <EmailRow
             key={id}
-            name={id}
+            id={id}
             title={to}
             subject={subject}
             message={message}
